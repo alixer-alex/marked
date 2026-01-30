@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class line_logic : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class line_logic : MonoBehaviour
         private Vector3 prevPosition;
         private float time;
         private bool startTimer;
+
+        [SerializeField]
+        private float recogTime; 
         [SerializeField] private LineRenderer template;
         [SerializeField] private float minDistance=0.1F;
     // Start is called before the first frame update
@@ -72,19 +76,23 @@ public class line_logic : MonoBehaviour
         if (startTimer)
         {
             time+=Time.deltaTime;
-            if (time > 5.0)
+            if (time > recogTime)
             {
                 //do save
-                
+    
                 foreach (LineRenderer l in lineList)
                 {
-                    Destroy(l.gameObject);
                     startTimer = false;
+                    Destroy(l.gameObject);
                 }
                 
                 lineList = new List<LineRenderer>();
+                
             }
+            
         }
         
     }
 }
+
+
